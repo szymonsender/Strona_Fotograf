@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS rezerwacje (
     typ_sesji TEXT NOT NULL,
     data_rezerwacji TEXT NOT NULL,
     godzina TEXT NOT NULL,
-    status TEXT DEFAULT 'oczekujący',
     FOREIGN KEY (uzytkownik_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
@@ -34,13 +33,6 @@ CREATE TABLE IF NOT EXISTS foldery (
     FOREIGN KEY (uzytkownik_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS wiadomosci (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    uzytkownik_id INTEGER NOT NULL,
-    tresc TEXT NOT NULL,
-    data_wyslania TEXT NOT NULL,
-    FOREIGN KEY (uzytkownik_id) REFERENCES users (id) ON DELETE CASCADE
-);
 """)
 
 # Dodanie użytkownika admina
