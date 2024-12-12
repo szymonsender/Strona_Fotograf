@@ -87,7 +87,8 @@ def home():
     portfolio = [
         {"title": "Reportaż ślubny", "img": "static/images/slub.jpg"},
         {"title": "Wydarzenia firmowe", "img": "static/images/firma.jpg"},
-        {"title": "Fotografia produktowa", "img": "static/images/produkt.jpg"}
+        {"title": "Reportaż ślubny", "img": "static/images/slub.jpg"},
+        {"title": "Wydarzenia firmowe", "img": "static/images/firma.jpg"},
     ]
 
     now = datetime.date.today()
