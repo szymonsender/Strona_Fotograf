@@ -1,0 +1,328 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #ff9900;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    background-color: #141414;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #444;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    margin: 0;
+    font-weight: 500;
+}
+
+header nav a {
+    margin: 0 15px;
+    font-weight: 500;
+}
+
+.section-nav {
+    text-align: center;
+    background: #2a2a2a;
+    padding: 10px;
+    border-bottom: 2px solid #444;
+}
+
+.section-nav a {
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+section {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+h2, h3 {
+    margin-top: 0;
+    font-weight: 500;
+}
+
+p, label {
+    font-weight: 300;
+}
+
+input, select, textarea, button {
+    font-family: 'Roboto', sans-serif;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #1e1e1e;
+    color: #ffffff;
+    font-weight: 300;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #ff9900;
+}
+
+button {
+    background-color: #ff9900;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #cc7a00;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.calendar th, .calendar td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: center;
+    width: 14.28%;
+    font-weight: 300;
+}
+
+.empty-day {
+    background-color: #1e1e1e;
+}
+
+.reserved-day {
+    background-color: #ff9900;
+    color: #000;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #141414;
+    padding: 20px;
+    text-align: center;
+    border-top: 2px solid #444;
+    color: #ffffff;
+    margin-top: 40px;
+}
+
+footer form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 300;
+}
+
+footer form input, footer form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #1e1e1e;
+    color: #ffffff;
+    font-weight: 300;
+}
+
+footer form button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.login-container, .register-container {
+    background-color: #2a2a2a;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-container h1, .register-container h1 {
+    font-weight: 500;
+}
+
+.login-container form label, .register-container form label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.login-container form input, .register-container form input {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.register-container form input, .register-container form textarea {
+    margin-top: 5px;
+}
+
+.login-container button, .register-container button {
+    margin-top: 20px;
+    width: 100%;
+    font-weight: 500;
+}
+
+.nav-links {
+    margin-top: 20px;
+}
+
+.login-container a, .register-container a {
+    margin: 0 10px;
+    font-weight: 400;
+}
+
+.login-container ul, .register-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+.user-info form {
+    margin-top: 20px;
+}
+
+.bookings ul, .folders ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bookings li, .folders li {
+    margin-bottom: 20px;
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.add-folder {
+    margin-top: 20px;
+}
+
+.all-folders table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.all-folders table th, .all-folders table td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.all-folders table th {
+    background-color: #1f1f1f;
+    font-weight: 500;
+}
+#kontakt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+#kontakt form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#kontakt label {
+    text-align: left;
+    font-weight: 300;
+}
+
+#kontakt input, #kontakt textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+#kontakt button {
+    width: 100px;
+    margin: 0 auto;
+}
+.reserved-day {
+    position: relative;
+    cursor: help;
+}
+
+.reserved-day:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: pre-wrap; /* Pozwala na interpretację <br> jako nowej linii */
+    z-index: 9999;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    max-width: 200px; /* Ograniczenie szerokości tooltipa */
+    text-align: left;
+}
+
+.reserved-day:hover::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top: 7px solid #333;
+    z-index: 9999;
+    top: -7px;
+}
+
+

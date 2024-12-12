@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Klienta</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <h1>Panel Klienta</h1>
+        <nav>
+            <a href="/">Strona Główna</a>
+            <a href="/logout">Wyloguj się</a>
+        </nav>
+    </header>
+    <main>
+        <section class="user-info">
+            <h2>Witaj, {{ user['imie'] }} {{ user['nazwisko'] }}</h2>
+            <p>Email: {{ user['email'] }}</p>
+            <p>Numer telefonu: {{ user['numer_telefonu'] }}</p>
+
+            <h3>Edytuj swoje dane</h3>
+            <form action="/edit_user" method="POST">
+                <label for="first_name">Imię:</label>
+                <input type="text" id="first_name" name="first_name" value="{{ user['imie'] }}" required>
+
+                <label for="last_name">Nazwisko:</label>
+                <input type="text" id="last_name" name="last_name" value="{{ user['nazwisko'] }}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ user['email'] }}" required>
+
+                <label for="phone">Numer telefonu:</label>
+                <input type="tel" id="phone" name="phone" value="{{ user['numer_telefonu'] }}" pattern="[0-9+ -]*" required>
+
+                <button type="submit">Zapisz zmiany</button>
+            </form>
+        </section>
+        <section class="bookings">
+            <h2>Twoje Rezerwacje</h2>
+            {% if bookings %}
+                <ul>
+                    {% for booking in bookings %}
+                        <li>
+                            <strong>Typ sesji:</strong> {{ booking['typ_sesji'] }}<br>
+                            <strong>Data:</strong> {{ booking['data_rezerwacji'] }}<br>
+                            <strong>Godzina:</strong> {{ booking['godzina'] }}<br>
+                            <strong>Status:</strong> {{ booking['status'] }}<br>
+
+                            <form action="/edit_booking" method="POST">
+                                <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
+                                <label for="session_type_{{ booking['id'] }}">Typ sesji:</label>
+                                <select id="session_type_{{ booking['id'] }}" name="session_type" required>
+                                    <option value="{{ booking['typ_sesji'] }}" selected>{{ booking['typ_sesji'] }}</option>
+                                    <option value="Sesja portretowa">Sesja portretowa</option>
+                                    <option value="Sesja ślubna">Sesja ślubna</option>
+                                    <option value="Sesja rodzinna">Sesja rodzinna</option>
+                                    <option value="Sesja komercyjna">Sesja komercyjna</option>
+                                </select>
+
+                                <label for="date_{{ booking['id'] }}">Data:</label>
+                                <input type="date" id="date_{{ booking['id'] }}" name="date" value="{{ booking['data_rezerwacji'] }}" required>
+                                <label for="time_{{ booking['id'] }}">Godzina:</label>
+                                <input type="time" id="time_{{ booking['id'] }}" name="time" value="{{ booking['godzina'] }}" required>
+                                <button type="submit">Edytuj</button>
+                            </form>
+
+                            <form action="/delete_booking" method="POST" onsubmit="return confirm('Czy na pewno usunąć?')">
+                                <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
+                                <button type="submit">Usuń</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nie masz żadnych rezerwacji.</p>
+            {% endif %}
+        </section>
+
+        {% if user['is_admin'] %}
+        <section class="add-folder">
+            <h2>Dodaj Folder dla Użytkownika</h2>
+            <form action="/add_folder" method="POST" enctype="multipart/form-data">
+                <label for="email">Adres e-mail użytkownika:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="folder_name">Nazwa folderu:</label>
+                <input type="text" id="folder_name" name="folder_name" required>
+                <label for="folder_file">Dodaj folder (plik ZIP):</label>
+                <input type="file" id="folder_file" name="folder_file" accept=".zip" required>
+                <button type="submit">Dodaj Folder</button>
+            </form>
+        </section>
+
+        <section class="all-folders">
+            <h2>Wszystkie Udostępnione Foldery</h2>
+            {% if folders %}
+                <table>
+                    <tr>
+                        <th>Nazwa Folderu</th>
+                        <th>Użytkownik</th>
+                        <th>Email Użytkownika</th>
+                        <th>Pobierz</th>
+                        <th>Usuń</th>
+                    </tr>
+                    {% for f in folders %}
+                    <tr>
+                        <td>{{ f['nazwa_folderu'] }}</td>
+                        <td>{{ f['user_username'] }}</td>
+                        <td>{{ f['user_email'] }}</td>
+                        <td><a href="/download_folder/{{ f['folder_id'] }}">Pobierz</a></td>
+                        <td>
+                            <form action="/delete_folder" method="POST" onsubmit="return confirm('Czy na pewno usunąć folder?')">
+                                <input type="hidden" name="folder_id" value="{{ f['folder_id'] }}">
+                                <button type="submit">Usuń</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>Brak udostępnionych folderów.</p>
+            {% endif %}
+        </section>
+        {% else %}
+        <section class="folders">
+            <h2>Twoje Sesje (Foldery ze zdjęciami)</h2>
+            {% if folders %}
+                <ul>
+                    {% for folder in folders %}
+                        <li>
+                            <strong>Nazwa folderu:</strong> {{ folder['nazwa_folderu'] }}<br>
+                            <a href="/download_folder/{{ folder['id'] }}">Pobierz folder</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nie masz żadnych folderów z sesji.</p>
+            {% endif %}
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

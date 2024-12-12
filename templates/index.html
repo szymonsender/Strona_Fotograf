@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Rezerwacja Sesji Fotograficznej</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <h1>Rezerwacja Sesji Fotograficznej</h1>
+        <nav>
+            {% if session.get('user_id') %}
+                <a href="/logout">Wyloguj</a>
+                <a href="/client_panel">Panel Klienta</a>
+            {% else %}
+                <a href="/login">Logowanie</a>
+                <a href="/register">Rejestracja</a>
+                <a href="/client_panel">Panel Klienta</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <nav class="section-nav">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#terminy">Terminy</a>
+        <a href="#cennik">Cennik</a>
+    </nav>
+
+    <main>
+        <section id="portfolio">
+            <h2>Portfolio</h2>
+            <div style="display:flex; gap:20px;">
+                {% for item in portfolio %}
+                    <div>
+                        <img src="{{ item.img }}" alt="{{ item.title }}" width="200">
+                        <p><strong>{{ item.title }}</strong></p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="terminy">
+            <h2>Terminy</h2>
+            <!-- Usunięto "Dostępne terminy", zostawiono tylko kalendarz -->
+            <h3>Kalendarz rezerwacji ({{ current_year }}-{{ "%02d"|format(current_month) }})</h3>
+<table class="calendar">
+    <tr>
+        <th>Pn</th>
+        <th>Wt</th>
+        <th>Śr</th>
+        <th>Cz</th>
+        <th>Pt</th>
+        <th>Sb</th>
+        <th>Nd</th>
+    </tr>
+    {% for week in calendar_matrix %}
+    <tr>
+        {% for day in week %}
+        {% if day == 0 %}
+            <td class="empty-day"></td>
+        {% else %}
+            {% set day_bookings = bookings_by_day.get(day, []) %}
+            {% if day in reserved_days and day_bookings %}
+                {% set day_booking_str = [] %}
+                {% for b in day_bookings %}
+                    {% set _ = day_booking_str.append(b["typ_sesji"] ~ " (" ~ b["godzina"] ~ ")") %}
+                {% endfor %}
+                {% set tooltip = "  ".join(day_booking_str) %}
+                <td class="reserved-day" data-tooltip="{{ tooltip|safe }}">{{ day }}</td>
+            {% elif day in reserved_days %}
+                <td class="reserved-day">{{ day }}</td>
+            {% else %}
+                <td>{{ day }}</td>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+            <h3>Zarezerwuj Termin</h3>
+            {% if session.get('user_id') %}
+            <form method="POST" action="/">
+                <input type="hidden" name="form_type" value="reserve">
+                <label for="session_type">Typ sesji:</label>
+                <select id="session_type" name="session_type" required>
+                    <option value="">Wybierz...</option>
+                    <option value="Sesja portretowa">Sesja portretowa</option>
+                    <option value="Sesja ślubna">Sesja ślubna</option>
+                    <option value="Sesja rodzinna">Sesja rodzinna</option>
+                    <option value="Sesja komercyjna">Sesja komercyjna</option>
+                </select>
+                <label for="date">Data (YYYY-MM-DD):</label>
+                <input type="date" id="date" name="date" required>
+                <label for="time">Godzina (HH:MM):</label>
+                <input type="time" id="time" name="time" required>
+                <button type="submit">Zarezerwuj</button>
+            </form>
+            {% else %}
+            <p>Aby zarezerwować termin, <a href="/login">zaloguj się</a>.</p>
+            {% endif %}
+        </section>
+        <section id="cennik">
+            <h2>Cennik</h2>
+            <ul>
+                <li><strong>Sesja portretowa:</strong> 200 PLN</li>
+                <li><strong>Sesja ślubna:</strong> 1500 PLN</li>
+                <li><strong>Sesja rodzinna:</strong> 500 PLN</li>
+                <li><strong>Sesja komercyjna:</strong> 1000 PLN</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <section id="kontakt">
+    <h2>Kontakt</h2>
+    <form method="POST" action="/">
+        <input type="hidden" name="form_type" value="contact">
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Numer telefonu:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="message">Wiadomość:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit">Wyślij</button>
+    </form>
+</section>
+
+    </main>
+
+    <footer>
+{#        strona została wykonana przez ...#}
+        <p>Strona wykonana przez: {{ "Szymon Sender" }}</p>
+
+    </footer>
+</body>
+</html>
