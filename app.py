@@ -9,8 +9,8 @@ app.secret_key = 'your_secret_key'
 
 ADMIN_EMAIL = "senderszymom@gmail.com"
 
-EMAIL_USER = "zajeciastrona@gmail.com"  # Twój email
-EMAIL_PASSWORD = "kkfp irfl trld poaa"  # Hasło aplikacji z Google
+EMAIL_USER = "stronazajecia@gmail.com"  # Twój email
+EMAIL_PASSWORD = "clfx mybu zciu qsqm"  # Hasło aplikacji z Google
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
