@@ -42,45 +42,50 @@
             </form>
         </section>
         <section class="bookings">
-            <h2>Twoje Rezerwacje</h2>
-            {% if bookings %}
-                <ul>
-                    {% for booking in bookings %}
-                        <li>
-                            <strong>Typ sesji:</strong> {{ booking['typ_sesji'] }}<br>
-                            <strong>Data:</strong> {{ booking['data_rezerwacji'] }}<br>
-                            <strong>Godzina:</strong> {{ booking['godzina'] }}<br>
-                            <strong>Status:</strong> {{ booking['status'] }}<br>
+    <h2>Twoje Rezerwacje</h2>
+    {% if bookings %}
+        <ul>
+            {% for booking in bookings %}
+                <li>
+                    <strong>Typ sesji:</strong> {{ booking['typ_sesji'] }}<br>
+                    <strong>Data:</strong> {{ booking['data_rezerwacji'] }}<br>
+                    <strong>Godzina:</strong> {{ booking['godzina'] }}<br>
+                    <strong>Status:</strong> {{ booking['status'] }}<br>
 
-                            <form action="/edit_booking" method="POST">
-                                <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
-                                <label for="session_type_{{ booking['id'] }}">Typ sesji:</label>
-                                <select id="session_type_{{ booking['id'] }}" name="session_type" required>
-                                    <option value="{{ booking['typ_sesji'] }}" selected>{{ booking['typ_sesji'] }}</option>
-                                    <option value="Sesja portretowa">Sesja portretowa</option>
-                                    <option value="Sesja ślubna">Sesja ślubna</option>
-                                    <option value="Sesja rodzinna">Sesja rodzinna</option>
-                                    <option value="Sesja komercyjna">Sesja komercyjna</option>
-                                </select>
+                    <!-- Dodane informacje o kliencie -->
+                    <strong>Email klienta:</strong> {{ booking['user_email'] }}<br>
+                    <strong>Telefon klienta:</strong> {{ booking['user_phone'] }}<br>
 
-                                <label for="date_{{ booking['id'] }}">Data:</label>
-                                <input type="date" id="date_{{ booking['id'] }}" name="date" value="{{ booking['data_rezerwacji'] }}" required>
-                                <label for="time_{{ booking['id'] }}">Godzina:</label>
-                                <input type="time" id="time_{{ booking['id'] }}" name="time" value="{{ booking['godzina'] }}" required>
-                                <button type="submit">Edytuj</button>
-                            </form>
+                    <form action="/edit_booking" method="POST">
+                        <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
+                        <label for="session_type_{{ booking['id'] }}">Typ sesji:</label>
+                        <select id="session_type_{{ booking['id'] }}" name="session_type" required>
+                            <option value="{{ booking['typ_sesji'] }}" selected>{{ booking['typ_sesji'] }}</option>
+                            <option value="Sesja portretowa">Sesja portretowa</option>
+                            <option value="Sesja ślubna">Sesja ślubna</option>
+                            <option value="Sesja rodzinna">Sesja rodzinna</option>
+                            <option value="Sesja komercyjna">Sesja komercyjna</option>
+                        </select>
 
-                            <form action="/delete_booking" method="POST" onsubmit="return confirm('Czy na pewno usunąć?')">
-                                <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
-                                <button type="submit">Usuń</button>
-                            </form>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Nie masz żadnych rezerwacji.</p>
-            {% endif %}
-        </section>
+                        <label for="date_{{ booking['id'] }}">Data:</label>
+                        <input type="date" id="date_{{ booking['id'] }}" name="date" value="{{ booking['data_rezerwacji'] }}" required>
+                        <label for="time_{{ booking['id'] }}">Godzina:</label>
+                        <input type="time" id="time_{{ booking['id'] }}" name="time" value="{{ booking['godzina'] }}" required>
+                        <button type="submit">Edytuj</button>
+                    </form>
+
+                    <form action="/delete_booking" method="POST" onsubmit="return confirm('Czy na pewno usunąć?')">
+                        <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
+                        <button type="submit">Usuń</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nie masz żadnych rezerwacji.</p>
+    {% endif %}
+</section>
+
 
         {% if user['is_admin'] %}
         <section class="add-folder">

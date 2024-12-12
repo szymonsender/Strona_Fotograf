@@ -194,11 +194,22 @@ def client_panel():
     user = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
 
     if user['is_admin']:
-        bookings = conn.execute('SELECT * FROM rezerwacje').fetchall()
+        bookings = conn.execute('''
+            SELECT r.*, u.email as user_email, u.numer_telefonu as user_phone 
+            FROM rezerwacje r
+            JOIN users u ON r.uzytkownik_id = u.id
+        ''').fetchall()
+
         folders = conn.execute(
             'SELECT f.id AS folder_id, f.nazwa_folderu, f.link_do_folderu, u.email AS user_email, u.username AS user_username FROM foldery f JOIN users u ON f.uzytkownik_id = u.id').fetchall()
     else:
-        bookings = conn.execute('SELECT * FROM rezerwacje WHERE uzytkownik_id = ?', (user_id,)).fetchall()
+        bookings = conn.execute('''
+            SELECT r.*, u.email as user_email, u.numer_telefonu as user_phone 
+            FROM rezerwacje r
+            JOIN users u ON r.uzytkownik_id = u.id
+            WHERE u.id = ?
+        ''', (user_id,)).fetchall()
+
         folders = conn.execute('SELECT * FROM foldery WHERE uzytkownik_id = ?', (user_id,)).fetchall()
 
     conn.close()
