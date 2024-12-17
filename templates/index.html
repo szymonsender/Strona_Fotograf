@@ -25,6 +25,21 @@
         </nav>
     </header>
 
+    <!-- Sekcja Flash Messages -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main class="container mt-4">
+
     <nav class="section-nav">
         <a href="#portfolio">Portfolio</a>
         <a href="#terminy">Terminy</a>
@@ -138,10 +153,12 @@
 
     </main>
 
-    <footer>
-{#        strona została wykonana przez ...#}
-        <p>Strona wykonana przez: {{ "Szymon Sender" }}</p>
+<footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+        <p class="mb-0">Strona wykonana przez <strong>Szymon Sender</strong></p>
+        <p class="mb-0">© {{ current_year }} Rezerwacja Sesji Fotograficznej</p>
+    </div>
+</footer>
 
-    </footer>
 </body>
 </html>

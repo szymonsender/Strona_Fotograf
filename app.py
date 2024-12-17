@@ -5,7 +5,7 @@ import datetime
 import calendar
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = "klucz"
 
 ADMIN_EMAIL = "senderszymom@gmail.com"
 
@@ -46,6 +46,10 @@ def send_email_to_admin(name, email, phone, message):
     except Exception as e:
         print("Błąd wysyłania emaila:", e)
 
+@app.context_processor
+def inject_current_year():
+    return {'current_year': datetime.datetime.now().year}
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -73,8 +77,17 @@ def home():
             time = request.form.get('time')
             if not session_type or not date or not time:
                 flash('Wszystkie pola rezerwacji są wymagane.', 'danger')
+                return redirect(url_for('home'))
+            conn = get_db_connection()
+            existing_booking = conn.execute(
+                'SELECT id FROM rezerwacje WHERE data_rezerwacji = ? AND godzina = ?',
+                (date, time)).fetchone()
+            if existing_booking:
+                # Istnieje już rezerwacja w tym terminie
+                conn.close()
+                flash('Ten termin jest już zarezerwowany. Wybierz inny dzień lub godzinę.', 'danger')
+                return redirect(url_for('home'))
             else:
-                conn = get_db_connection()
                 conn.execute(
                     'INSERT INTO rezerwacje (uzytkownik_id, typ_sesji, data_rezerwacji, godzina) VALUES (?, ?, ?, ?)',
                     (session.get('user_id'), session_type, date, time))

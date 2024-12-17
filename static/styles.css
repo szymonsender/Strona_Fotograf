@@ -325,4 +325,50 @@ footer form button {
     top: -7px;
 }
 
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+.flash-messages {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050; /* Upewnij się, że jest wyżej niż inne elementy */
+    width: 80%; /* Możesz dostosować szerokość */
+    max-width: 500px; /* Maksymalna szerokość */
+}
+
+.flash-message {
+    /* Opcjonalne dodatkowe style */
+    text-align: center;
+}
 
