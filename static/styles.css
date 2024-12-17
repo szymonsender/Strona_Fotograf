@@ -357,18 +357,30 @@ footer form button {
     padding: 0.75rem 1.25rem;
     color: inherit;
 }
+/* Centrowanie komunikatów flash */
 .flash-messages {
     position: fixed;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1050; /* Upewnij się, że jest wyżej niż inne elementy */
-    width: 80%; /* Możesz dostosować szerokość */
-    max-width: 500px; /* Maksymalna szerokość */
+    width: 90%;
+    max-width: 500px;
 }
 
 .flash-message {
-    /* Opcjonalne dodatkowe style */
     text-align: center;
 }
+
+/* Efekt powiększenia ikon na hover */
+.footer-icon:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+/* Ustawienie kursora na rękę */
+.footer-icon {
+    cursor: pointer;
+}
+
 

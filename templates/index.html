@@ -26,12 +26,15 @@
     </header>
 
     <!-- Sekcja Flash Messages -->
-    <div class="container mt-3">
+    <div class="flash-message">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
                     <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                         {{ message }}
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Zamknij">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -160,5 +163,19 @@
     </div>
 </footer>
 
+<!-- Bootstrap JS i zależności -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Skrypt do automatycznego zamykania komunikatów -->
+<script>
+    $(document).ready(function() {
+        // Automatyczne zamykanie alertów po 5 sekundach
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 5000); // 5000 milisekund = 5 sekund
+    });
+</script>
 </body>
 </html>
